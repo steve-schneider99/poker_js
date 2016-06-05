@@ -8,7 +8,11 @@ var myFour = ["d1", "c1", "h1", "s1", "s13"];
 
 
 function hand_strength(hand) {
-  var flush = is_flush(hand);
+  if (is_flush(hand)) {
+    console.log("flush, now check for royal, straight flush, flush high card");
+  } else {
+    console.log("not a flush, check for 4 of a kind, full house, straight, 3 of a kind, two pair, one pair, high card")
+  }
 
 }
 
@@ -20,7 +24,7 @@ function is_flush(hand) {
     suits.push(hand[i].charAt(0));
   }
   suits.sort();
-  if (suits[0] == suits[4]) {
+  if (suits[0] == suits[suits.length - 1]) {
     return true
   } else {
     return false
@@ -29,11 +33,13 @@ function is_flush(hand) {
 
 function is_num_hand(hand) {
   var values = [];
-  // grabs value
+
   for (i=0; i < hand.length; i++) {
-    values.push(hand[i].slice(1,3));
+    // pulls the number value by taking everything between the 1st and 3rd index, which accounts for double digit cards
+    values.push(parseInt(hand[i].slice(1,3)));
   }
-  values.sort();
+  values.sort(sortAsc);
+
 /*
   if (values[0] === values[3]) || (value[1] === values[4]) {
     //confirms 4 of a kind by seeing if 1st and 4th value match, or 2 and 5th value match
@@ -44,3 +50,6 @@ function is_num_hand(hand) {
   }
 */
 }
+
+function sortAsc(a, b) {return a-b};
+function sortDesc(a, b) {return b-a};
