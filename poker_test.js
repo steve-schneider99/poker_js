@@ -6,6 +6,9 @@ var myCards = ["d1", "c3", "h6", "s6", "s13"];
 var myFlush = ["d1", "d3", "d6", "d7", "d13"];
 var myFour = ["d1", "c1", "h1", "s1", "s13"];
 var myBoat = ["d1", "c1", "h1", "s6", "d6"];
+var myStraight = ["d1", "c2", "h3", "s4", "d5"];
+var myBroadway = ["d10", "c12", "h1", "s14", "d13"];
+
 
 
 function hand_strength(hand) {
@@ -30,7 +33,7 @@ function is_num_hand(hand) {
 
 }
 
-function is_straight(values) {
+function is_straight(hand) {
   var values = [];
 
   for (i=0; i < hand.length; i++) {
@@ -39,12 +42,21 @@ function is_straight(values) {
   }
   values.sort(sortAsc);
 
-  if ((values[0] == values[4] + 4) || (values[0] == "10" && values[4] == "1")) {
-    console.log("this is a straight");
+  for (i=0; i < values.length; i++) {
+    var next_card = i + 1;
+    // if it's made it to the last card, it must be a straight.
+    if (values[i] === values[values.length - 1]) {
+      return true;
+    }
+    if (values[i] === (values[next_card] - 1)) {
+      // if the next card is sequential with the current card, move on to the next card
+    } else if ((values[0] == 1) && (values[1] == 10)) {
+      // accounts for a broadway straight, since ace is one and not sequential with 10
+    } else {
+      // if the cards are not sequential return false(default for is_straight)
+      return false;
+    }
   }
-  // run function for other number cards first including two pair, then this code to check for a straight.
-
-
 }
 
 function is_flush(values) {
