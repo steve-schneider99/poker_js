@@ -30,15 +30,21 @@ function is_num_hand(hand) {
 
 }
 
-function is_boat(values) {
-  //checks to see if hand is a full house. If it is, returns an array with "boat", the number value of the 3 cards, and the number value of the 2 cards.
-  if (values[0] == values[1] && values[2] == values[5]) {
-    return ["boat", values[2], values[0]]
-  } else if (values[0] == values[2] && values[3] == values[4]) {
-    return ["boat", values[0], values[3]]
-  } else {
-    return false
+function is_straight(values) {
+  var values = [];
+
+  for (i=0; i < hand.length; i++) {
+    // pulls the number value by taking everything between the 1st and 3rd index, which accounts for double digit cards(i.e. 10 through K)
+    values.push(parseInt(hand[i].slice(1,3)));
   }
+  values.sort(sortAsc);
+
+  if ((values[0] == values[4] + 4) || (values[0] == "10" && values[4] == "1")) {
+    console.log("this is a straight");
+  }
+  // run function for other number cards first including two pair, then this code to check for a straight.
+
+
 }
 
 function is_flush(values) {
@@ -49,6 +55,17 @@ function is_flush(values) {
     suits.push(values[i].charAt(0));
   }
   return suits[0] == suits[suits.length - 1]
+}
+
+function is_boat(values) {
+  //checks to see if hand is a full house. If it is, returns an array with "boat", the number value of the 3 cards, and the number value of the 2 cards.
+  if (values[0] == values[1] && values[2] == values[5]) {
+    return ["boat", values[2], values[0]]
+  } else if (values[0] == values[2] && values[3] == values[4]) {
+    return ["boat", values[0], values[3]]
+  } else {
+    return false
+  }
 }
 
 function is_quads(values) {
